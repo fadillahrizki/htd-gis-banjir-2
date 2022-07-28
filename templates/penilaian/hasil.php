@@ -4,12 +4,10 @@
             <div class="page-inner py-5">
                 <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                     <div>
-                        <h2 class="text-white pb-2 fw-bold"><?=_ucwords($table)?></h2>
-                        <h5 class="text-white op-7 mb-2">Memanajemen data <?=_ucwords($table)?></h5>
+                        <h2 class="text-white pb-2 fw-bold">Hasil <?=_ucwords($table)?></h2>
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
-                        <a href="<?=routeTo('penilaian/hasil')?>" class="btn btn-success btn-round mr-3">Hasil <?=_ucwords($table)?></a>
-                        <a href="<?=routeTo('penilaian/create')?>" class="btn btn-secondary btn-round">Buat <?=_ucwords($table)?></a>
+                    <a href="<?=routeTo('penilaian/index',['table'=>$table])?>" class="btn btn-warning btn-round">Kembali</a>
                     </div>
                 </div>
             </div>
@@ -22,7 +20,10 @@
                             <?php if($success_msg): ?>
                             <div class="alert alert-success"><?=$success_msg?></div>
                             <?php endif ?>
-                            <div class="table-responsive table-hover table-sales">
+
+                            <iframe src="https://www.google.com/maps?q=2.7214303,99.6147077&z=15&output=embed" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+                            <div class="table-responsive table-hover table-sales mt-5">
                                 <table class="table datatable">
                                     <thead>
                                         <tr>
@@ -41,8 +42,6 @@
                                             <?php foreach($kategori as $kt): ?>
                                                 <th class="text-center"><?=$kt->nama?></th>
                                             <?php endforeach ?>
-                                            <th class="text-right">
-                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -75,10 +74,6 @@
                                             ?>
                                                 <td class="text-center"><?=$kt->bobot*$skor->nilai?></td>
                                             <?php endforeach ?>
-                                            <td class="text-right">
-                                                <a href="<?=routeTo('penilaian/edit',['subjek_id'=>$data->subjek_id])?>" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                                                <a href="<?=routeTo('penilaian/delete',['subjek_id'=>$data->subjek_id])?>" onclick="if(confirm('apakah anda yakin akan menghapus data ini ?')){return true}else{return false}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>
-                                            </td>
                                         </tr>
                                         <?php endforeach ?>
                                     </tbody>
