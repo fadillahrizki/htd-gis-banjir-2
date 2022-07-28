@@ -38,7 +38,7 @@
                                 ?>
                                 <div class="form-group">
                                     <label for=""><?=$label?></label>
-                                    <?= Form::input($type, $table."[".$field."]", ['class'=>"form-control","placeholder"=>$label,"value"=>$old[$field]??$data->{$field}]) ?>
+                                    <?= Form::input($type, $table."[".$field."]", ['class'=>($type == 'color' ? 'd-block' :'form-control'),"placeholder"=>$label,"value"=>$old[$field]??$data->{$field}]) ?>
                                 </div>
                                 <?php endforeach ?>
                                 <div class="form-group">

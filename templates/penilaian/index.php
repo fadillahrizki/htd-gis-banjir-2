@@ -8,7 +8,7 @@
                         <h5 class="text-white op-7 mb-2">Memanajemen data <?=_ucwords($table)?></h5>
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
-                        <a href="<?=routeTo('crud/create',['table'=>$table])?>" class="btn btn-secondary btn-round">Buat <?=_ucwords($table)?></a>
+                        <a href="<?=routeTo('penilaian/create')?>" class="btn btn-secondary btn-round">Buat <?=_ucwords($table)?></a>
                     </div>
                 </div>
             </div>
@@ -37,6 +37,9 @@
                                             ?>
                                             <th><?=$label?></th>
                                             <?php endforeach ?>
+                                            <?php foreach($kategori as $kt): ?>
+                                                <th class="text-center"><?=$kt->nama?></th>
+                                            <?php endforeach ?>
                                             <th class="text-right">
                                             </th>
                                         </tr>
@@ -62,13 +65,18 @@
                                                 }
                                                 $label = _ucwords($label);
                                             ?>
-                                            <td>
-                                                <?=$label == 'Warna' ? "<div style='background:".$data_value.";padding:10px'></div>" : $data_value?>
-                                            </td>
+                                            <td><?=$data_value?></td>
+                                            <?php endforeach ?>
+                                            <?php 
+                                                foreach($kategori as $kt): 
+                                                $penilaian = $db->single('penilaian',['kategori_id'=>$kt->id,'subjek_id'=>$data->subjek_id]);
+                                                $skor = $db->single('skor',['id'=>$penilaian->skor_id]);
+                                            ?>
+                                                <td class="text-center"><?=$kt->bobot*$skor->nilai?></td>
                                             <?php endforeach ?>
                                             <td class="text-right">
-                                                <a href="<?=routeTo('crud/edit',['table'=>$table,'id'=>$data->id])?>" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                                                <a href="<?=routeTo('crud/delete',['table'=>$table,'id'=>$data->id])?>" onclick="if(confirm('apakah anda yakin akan menghapus data ini ?')){return true}else{return false}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>
+                                                <a href="<?=routeTo('penilaian/edit',['subjek_id'=>$data->subjek_id])?>" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
+                                                <a href="<?=routeTo('penilaian/delete',['subjek_id'=>$data->subjek_id])?>" onclick="if(confirm('apakah anda yakin akan menghapus data ini ?')){return true}else{return false}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>
                                             </td>
                                         </tr>
                                         <?php endforeach ?>

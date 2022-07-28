@@ -22,25 +22,30 @@
                             <div class="alert alert-danger"><?=$error_msg?></div>
                             <?php endif ?>
                             <form action="" method="post">
-                                <?php 
-                                foreach(config('fields')[$table] as $key => $field): 
-                                    $label = $field;
-                                    $type  = "text";
-                                    if(is_array($field))
-                                    {
-                                        $field_data = $field;
-                                        $field = $key;
-                                        $label = $field_data['label'];
-                                        if(isset($field_data['type']))
-                                        $type  = $field_data['type'];
-                                    }
-                                    $label = _ucwords($label);
+                                
+                                <div class="form-group">
+                                    <label for="">Subjek</label>
+                                    <select name="penilaian[subjek_id]" class="form-control">
+                                        <option selected readonly value="">- Pilih Subjek -</option>
+                                        <?php foreach($subjeks as $subjek):?>
+                                        <option value="<?=$subjek->id?>"><?=$subjek->nama?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </div>
+
+                                <?php $i=0;foreach($kategori as $kt): 
+                                $skors = $db->all('skor',['kategori_id'=>$kt->id]);    
                                 ?>
                                 <div class="form-group">
-                                    <label for=""><?=$label?></label>
-                                    <?= Form::input($type, $table."[".$field."]", ['class'=>($type == 'color' ? 'd-block' :'form-control'),"placeholder"=>$label,"value"=>$old[$field]??'']) ?>
+                                    <label for=""><?=$kt->nama?></label>
+                                    <select name="kategori[<?=$i?>]" class="form-control">
+                                        <option selected readonly value="">- Pilih Skor -</option>
+                                        <?php foreach($skors as $sk):?>
+                                            <option value="<?=$kt->id?>-<?=$sk->id?>"><?=$sk->nama?> (<?=$sk->nilai?>)</option>
+                                        <?php endforeach ?>
+                                    </select>
                                 </div>
-                                <?php endforeach ?>
+                                <?php $i++; endforeach ?>
                                 <div class="form-group">
                                     <button class="btn btn-primary">Submit</button>
                                 </div>
